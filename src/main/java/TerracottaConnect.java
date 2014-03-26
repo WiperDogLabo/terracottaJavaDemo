@@ -1,5 +1,4 @@
 
-import java.util.Map;
 import java.util.Properties;
 
 import org.quartz.Job;
@@ -12,7 +11,6 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.TriggerBuilder;
 import org.quartz.Trigger;
 import org.quartz.SimpleScheduleBuilder;
-import org.quartz.SchedulerFactory;
 
 public class TerracottaConnect {
 	public static void main(String [] args) {
@@ -21,8 +19,8 @@ public class TerracottaConnect {
 
 	public TerracottaConnect(){
 		System.out.println( "Test terracotta 4.1.1" );
-		SchedulerFactory sf = new StdSchedulerFactory();
-		Map<String, String> schedProp = new Properties();
+		StdSchedulerFactory sf = new StdSchedulerFactory();
+		Properties schedProp = new Properties();
 		schedProp.setProperty("org.quartz.scheduler.instanceName", "TestScheduler");
 		schedProp.setProperty("org.quartz.scheduler.instanceId", "groovy_instance");
 		schedProp.setProperty("org.quartz.scheduler.skipUpdateCheck", "true");
@@ -41,7 +39,7 @@ public class TerracottaConnect {
 			
 			JobDetail job = JobBuilder.newJob(AJob.class).withIdentity("job1").storeDurably(true).build() ;
 			sched.addJob(job, true);
-			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(new SimpleScheduleBuilder().repeatForever().withIntervalInSeconds(10)).build();
+			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
 			sched.scheduleJob(trigger);
 			
 			sched.start();

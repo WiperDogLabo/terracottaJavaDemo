@@ -2,55 +2,56 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <groupId>org.wiperdog</groupId>
   <artifactId>terracottademo</artifactId>
   <packaging>jar</packaging>
   <name>terracottademo</name>
   <description></description>
+  <version>0.1.0</version>
 
   <properties>
   </properties>
 
   <dependencies>  
-    <!-- internal components used for shading which will be removed in final pom -->
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-terracotta-bootstrap</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-core</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-commonj</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-jboss</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-oracle</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-weblogic</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler.internal</groupId>
       <artifactId>quartz-plugins</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
       <artifactId>quartz-jobs</artifactId>
-      <version>${project.version}</version>
+      <version>2.2.1</version>
       <scope>provided</scope>
     </dependency>    
     <!-- For using in OSGI system start -->
