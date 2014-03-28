@@ -30,14 +30,11 @@ public class TerracottaConnect {
 		schedProp.setProperty("org.quartz.jobStore.misfireThreshold", "60000");
 		schedProp.setProperty("org.quartz.jobStore.class", "org.terracotta.quartz.TerracottaJobStore");
 		schedProp.setProperty("org.quartz.jobStore.tcConfigUrl", "localhost:9510");
-//		 schedProp.setProperty("org.quartz.scheduler.classLoadHelper.class", "org.quartz.simpl.ThreadContextClassLoadHelper") ;
-//		 schedProp.setProperty("org.quartz.scheduler.classLoadHelper.class", "org.quartz.simpl.InitThreadContextClassLoadHelper") ;
-//		schedProp.setProperty("org.quartz.scheduler.classLoadHelper.class", "org.quartz.simpl.LoadingLoaderClassLoadHelper") ;
 		try {
 			sf.initialize(schedProp);
 			Scheduler sched = sf.getScheduler();
 			
-			JobDetail job = JobBuilder.newJob(AJob.class).withIdentity("job1").storeDurably(true).build() ;
+			JobDetail job = JobFactory.createJob("job1");
 			sched.addJob(job, true);
 			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
 			sched.scheduleJob(trigger);
