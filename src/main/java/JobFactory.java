@@ -1,3 +1,8 @@
+import org.quartz.JobDetail;
+import org.quartz.InterruptableJob;
+import org.quartz.DisallowConcurrentExecution;
+import org.quartz.JobExecutionContext;
+import static org.quartz.JobBuilder.*;
 
 public class JobFactory {
 	/**
@@ -24,11 +29,13 @@ public class JobFactory {
 	 *
 	 */
 	@DisallowConcurrentExecution
-	private static class GenericJob implements InterruptableJob {
+	public static class GenericJob implements InterruptableJob {
 		public void interrupt() {
 		}
 
 		public void execute(JobExecutionContext context) {
+			System.out.println ("Starting the Job:" + context.getJobDetail().getKey().getName() + " .");
+			System.out.println ("Finishing the Job:" + context.getJobDetail().getKey().getName() + " .");
 		}
 	}
 
@@ -36,11 +43,13 @@ public class JobFactory {
 	 *
 	 *
 	 */
-	private static class GenericConcurrentJob implements InterruptableJob {
+	public static class GenericConcurrentJob implements InterruptableJob {
 		public void interrupt() {
 		}
 
 		public void execute(JobExecutionContext context) {
+			System.out.println ("Starting the Job:" + context.getJobDetail().getKey().getName() + " .");
+			System.out.println ("Finishing the Job:" + context.getJobDetail().getKey().getName() + " .");
 		}
 	}
 }
