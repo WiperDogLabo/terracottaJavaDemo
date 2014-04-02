@@ -187,7 +187,39 @@
     </dependency>
     <!-- For using in OSGI system end   -->
   </dependencies>
-  
+  <profiles>
+    <profile>
+      <id>test1</id>
+      <properties>
+        <test.mainclass>QuartzTest1</test.mainclass>
+      </properties>
+    </profile>
+    <profile>
+      <id>test2</id>
+      <properties>
+        <test.mainclass>QuartzTest2</test.mainclass>
+      </properties>
+    </profile>
+    <profile>
+      <id>test3</id>
+      <properties>
+        <test.mainclass>QuartzTest3</test.mainclass>
+      </properties>
+    </profile>
+    <profile>
+      <id>test4</id>
+      <properties>
+        <test.mainclass>QuartzTest4</test.mainclass>
+      </properties>
+    </profile>
+    <profile>
+      <id>test5</id>
+      <properties>
+        <test.mainclass>QuartzTest5</test.mainclass>
+      </properties>
+    </profile>
+  </profiles> 
+
   <build>
     
     <plugins>   
@@ -203,7 +235,7 @@
           </execution>
         </executions> 
         <configuration>
-          <mainClass>TerracottaConnect</mainClass>
+          <mainClass>${test.mainclass}</mainClass>
           <!--
           <arguments>
             <argument></argument>
