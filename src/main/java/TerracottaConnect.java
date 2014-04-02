@@ -16,8 +16,20 @@ public class TerracottaConnect {
 	public static void main(String [] args) {
 		System.out.println( "Test terracotta 4.1.1" );
 		TerracottaConnect con = new TerracottaConnect();
-		con.initialize(true);
-		con.run1job();
+		con.getOpt(args);
+		con.initialize(con.isClustered);
+		//con.run1job();
+		con.testConcurrency4();
+	}
+
+	private boolean isClustered = false;
+
+	private void getOpt(String [] args) {
+		for (String arg : args) {
+			if (arg.equals("-c")) {
+				isClustered = true;
+			}
+		}
 	}
 
 	private Scheduler sched = null;
@@ -29,7 +41,7 @@ public class TerracottaConnect {
 		schedProp.setProperty("org.quartz.scheduler.instanceId", "instance1");
 		schedProp.setProperty("org.quartz.scheduler.skipUpdateCheck", "true");
 		schedProp.setProperty("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
-		schedProp.setProperty("org.quartz.threadPool.threadCount", "1");
+		schedProp.setProperty("org.quartz.threadPool.threadCount", "5");
 		schedProp.setProperty("org.quartz.threadPool.threadPriority", "5");
 		if (isClustered) {
 			schedProp.setProperty("org.quartz.jobStore.misfireThreshold", "60000");
@@ -50,12 +62,76 @@ public class TerracottaConnect {
 
 	private void run1job() {
 		try {
-			JobDetail job = JobFactory.createConcurrentJob("job1");
+			JobDetail job = JobFactory.createJob("job1");
 			sched.addJob(job, true);
 			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
 			sched.scheduleJob(trigger);
 			
 		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	private void testConcurrency1() {
+		try {
+			JobDetail job = JobFactory.createJob("job1");
+			sched.addJob(job, true);
+			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+			
+			job = JobFactory.createJob("job2");
+			sched.addJob(job, true);
+			trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	private void testConcurrency2() {
+		try {
+			JobDetail job = JobFactory.createConcurrentJob("job1");
+			sched.addJob(job, true);
+			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+			
+			job = JobFactory.createConcurrentJob("job2");
+			sched.addJob(job, true);
+			trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	private void testConcurrency3() {
+		try {
+			JobDetail job = JobFactory.createJob("job1");
+			sched.addJob(job, true);
+			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+			
+			trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	private void testConcurrency4() {
+		try {
+			JobDetail job = JobFactory.createConcurrentJob("job1");
+			sched.addJob(job, true);
+			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+			
+			trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+			sched.scheduleJob(trigger);
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}

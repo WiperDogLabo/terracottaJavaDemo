@@ -1,3 +1,4 @@
+import java.util.Date;
 import org.quartz.JobDetail;
 import org.quartz.InterruptableJob;
 import org.quartz.DisallowConcurrentExecution;
@@ -34,8 +35,11 @@ public class JobFactory {
 		}
 
 		public void execute(JobExecutionContext context) {
-			System.out.println ("Starting the Job:" + context.getJobDetail().getKey().getName() + " .");
-			System.out.println ("Finishing the Job:" + context.getJobDetail().getKey().getName() + " .");
+			System.out.println ((new Date()).toGMTString() + " Starting the Job:" + context.getJobDetail().getKey().getName() + " .");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+			System.out.println ((new Date()).toGMTString() + " Finishing the Job:" + context.getJobDetail().getKey().getName() + " .");
 		}
 	}
 
@@ -48,8 +52,11 @@ public class JobFactory {
 		}
 
 		public void execute(JobExecutionContext context) {
-			System.out.println ("Starting the Job:" + context.getJobDetail().getKey().getName() + " .");
-			System.out.println ("Finishing the Job:" + context.getJobDetail().getKey().getName() + " .");
+			System.out.println ((new Date()).toGMTString() + " Starting the Job:" + context.getJobDetail().getKey().getName() + " .");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+			System.out.println ((new Date()).toGMTString() + " Finishing the Job:" + context.getJobDetail().getKey().getName() + " .");
 		}
 	}
 }
