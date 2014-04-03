@@ -218,6 +218,18 @@
         <test.mainclass>QuartzTest5</test.mainclass>
       </properties>
     </profile>
+    <profile>
+      <id>ttest11</id>
+      <properties>
+        <test.mainclass>TerracottaTest1_1</test.mainclass>
+      </properties>
+    </profile>
+    <profile>
+      <id>ttest12</id>
+      <properties>
+        <test.mainclass>TerracottaTest1_2</test.mainclass>
+      </properties>
+    </profile>
   </profiles> 
 
   <build>

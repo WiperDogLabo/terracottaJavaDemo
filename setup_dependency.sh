@@ -8,7 +8,6 @@ if [ ! -d terracotta ]; then
    mkdir terracotta
 fi
 
-
 cd terracotta
 if [ ! -d quartz ];then
     git clone https://github.com/TerracottaUnofficialRepositories/quartz.git

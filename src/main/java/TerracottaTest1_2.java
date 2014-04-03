@@ -12,9 +12,9 @@ import org.quartz.TriggerBuilder;
 import org.quartz.Trigger;
 import org.quartz.SimpleScheduleBuilder;
 
-public class QuartzTest1 {
+public class TerracottaTest1_2 {
 	public static void main(String [] args) {
-		(new QuartzTest1()).doTest();
+		(new TerracottaTest1_2()).doTest();
 	}
 
 	private Scheduler sched = null;
@@ -26,29 +26,21 @@ public class QuartzTest1 {
 		con.initialize(isClustered);
 		sched = con.getScheduler();
 
-		run1job();
+		testConcurrency1();
 	}
 
-	private void run1job() {
+	private void testConcurrency1() {
 		try {
-			System.out.println("###########################################################################");
-			System.out.println("A single job 'job1' simply runs continuously");
-			System.out.println("###########################################################################");
-			JobDetail job = JobFactory.createJob("job1");
-			sched.addJob(job, true);
-			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
-			sched.scheduleJob(trigger);
-			
-		    Thread.sleep(10 * 1000);
-
+			// wait for the jobs be executed.
+			Thread.sleep(10 * 1000);
+			// kill scheduler
 			sched.shutdown();
-
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-
 	}
+
 }
 
 

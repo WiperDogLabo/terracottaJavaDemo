@@ -31,6 +31,9 @@ public class QuartzTest3 {
 
 	private void testConcurrency2() {
 		try {
+			System.out.println("###########################################################################");
+			System.out.println("2 jobs 'job1', 'job2' are scheduled as almost same timing, and runs in almost same timing(not using @DisallowConcurrentExecution)");
+			System.out.println("###########################################################################");
 			JobDetail job = JobFactory.createConcurrentJob("job1");
 			sched.addJob(job, true);
 			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();

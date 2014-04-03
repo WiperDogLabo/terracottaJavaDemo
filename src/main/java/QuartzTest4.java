@@ -31,6 +31,9 @@ public class QuartzTest4 {
 
 	private void testConcurrency3() {
 		try {
+			System.out.println("###########################################################################");
+			System.out.println("A job 'job1' is scheduled in 2 duplicated schedule(using @DisallowConcurrentExecution), may runs sequencially.");
+			System.out.println("###########################################################################");
 			JobDetail job = JobFactory.createJob("job1");
 			sched.addJob(job, true);
 			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
