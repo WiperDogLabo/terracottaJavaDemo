@@ -32,7 +32,7 @@ public class TerracottaTest1_2 {
 	private void testConcurrency1() {
 		try {
 			// wait for the jobs be executed.
-			Thread.sleep(10 * 1000);
+			Thread.sleep(3600 * 1000);
 			// kill scheduler
 			sched.shutdown();
 		} catch (Exception e) {

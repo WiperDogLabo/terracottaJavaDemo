@@ -33,7 +33,9 @@ public class Setup {
 		try {
 			sf.initialize(schedProp);
 			sched = sf.getScheduler();
-			sched.start();
+			if(!sched.isStarted()){
+				sched.start();
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

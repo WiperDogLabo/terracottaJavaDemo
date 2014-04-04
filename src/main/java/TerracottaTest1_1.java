@@ -31,20 +31,25 @@ public class TerracottaTest1_1 {
 
 	private void testConcurrency1() {
 		try {
+			Trigger trigger;
 			// schedule 2 jobs
 			// expects these jobs run on 2 JVM.
 			JobDetail job = JobFactory.createJob("job1");
-			sched.addJob(job, true);
-			Trigger trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
-			sched.scheduleJob(trigger);
+			if(!sched.checkExists(job.getKey())){
+				sched.addJob(job, true);
+				trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+				sched.scheduleJob(trigger);
+			}
 			
 			job = JobFactory.createJob("job2");
-			sched.addJob(job, true);
-			trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
-			sched.scheduleJob(trigger);
+			if(!sched.checkExists(job.getKey())){
+				sched.addJob(job, true);
+				trigger = TriggerBuilder.newTrigger().forJob(job).startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInSeconds(10)).build();
+				sched.scheduleJob(trigger);
+			}
 
 			// wait for the jobs be executed.
-			Thread.sleep(10 * 1000);
+			Thread.sleep(3600 * 1000);
 			// kill scheduler
 			sched.shutdown();
 		} catch (Exception e) {
